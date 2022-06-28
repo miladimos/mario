@@ -1,11 +1,17 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=2]
 
+[ext_resource path="res://scenes/gem.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/player.gd" type="Script" id=3]
 [ext_resource path="res://assets/Tiles/platformPack_tile001.png" type="Texture" id=4]
 [ext_resource path="res://assets/Tiles/platformPack_tile004.png" type="Texture" id=5]
 [ext_resource path="res://assets/Tiles/platformPack_tile025.png" type="Texture" id=6]
 [ext_resource path="res://assets/Tiles/platformPack_tile035.png" type="Texture" id=7]
+[ext_resource path="res://assets/Items/platformPack_item009.png" type="Texture" id=8]
+[ext_resource path="res://scripts/gem_counter_panel.gd" type="Script" id=9]
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 5.32841, 10 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
@@ -149,10 +155,29 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 2/shapes = [  ]
 2/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 158.731, 9.64665 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.226563, 0.177002, 0.177002, 0.470588 )
+
 [node name="game" type="Node2D"]
 
+[node name="game_over_area" type="Area2D" parent="."]
+position = Vector2( 3432, 759 )
+rotation = 3.14426
+scale = Vector2( 342.275, -1.6892 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game_over_area"]
+position = Vector2( 4.66438, 0 )
+scale = Vector2( 0.998457, 1.06924 )
+shape = SubResource( 9 )
+
 [node name="player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1276, 234 )
+position = Vector2( 294, 244 )
 script = ExtResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -178,3 +203,69 @@ z_index = -2
 tile_set = SubResource( 7 )
 format = 1
 tile_data = PoolIntArray( -65510, 1, 0, -65509, 1, 0, -65508, 1, 0, -65507, 1, 0, -65506, 1, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, 30, 0, 0, 65562, 0, 0, 65563, 0, 0, 65564, 0, 0, 65565, 0, 0, 65566, 0, 0, 131098, 0, 0, 131099, 0, 0, 131100, 0, 0, 131101, 0, 0, 131102, 0, 0, 196634, 1, 0, 196635, 1, 0, 196636, 1, 0, 196637, 1, 0, 196638, 0, 0, 262170, 0, 0, 262171, 0, 0, 262172, 0, 0, 262173, 0, 0, 262174, 0, 0, 327706, 0, 0, 327707, 0, 0, 327708, 0, 0, 327709, 0, 0, 327710, 0, 0, 393242, 0, 0, 393243, 0, 0, 393244, 0, 0, 393245, 0, 0, 393246, 0, 0 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 1793, 203 )
+shape = SubResource( 8 )
+one_way_collision = true
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2( 0, -260 )
+scale = Vector2( 1.0143, 1.00664 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2( 1798.29, 204.353 )
+shape = SubResource( 8 )
+one_way_collision = true
+
+[node name="gem" parent="." instance=ExtResource( 1 )]
+position = Vector2( 579, 207 )
+
+[node name="gem2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1762, 164 )
+
+[node name="gem3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1757, -101 )
+
+[node name="gem4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 703, 210 )
+
+[node name="gem5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 954, 28 )
+
+[node name="gem6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 829, 28 )
+
+[node name="gem_counter_panel" type="CanvasLayer" parent="."]
+script = ExtResource( 9 )
+
+[node name="Panel" type="Panel" parent="gem_counter_panel"]
+margin_left = 18.0
+margin_top = 8.0
+margin_right = 237.0
+margin_bottom = 121.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="TextureRect" type="TextureRect" parent="gem_counter_panel/Panel"]
+margin_right = 95.0
+margin_bottom = 113.0
+texture = ExtResource( 8 )
+expand = true
+
+[node name="gem_counter_label" type="Label" parent="gem_counter_panel/Panel"]
+margin_left = 97.0
+margin_top = 47.0
+margin_right = 138.0
+margin_bottom = 87.0
+text = "X"
+uppercase = true
+
+[connection signal="body_entered" from="game_over_area" to="player" method="_on_game_over_area_body_entered"]

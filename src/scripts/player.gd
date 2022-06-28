@@ -3,6 +3,7 @@ extends KinematicBody2D
 var number = 0
 var shetab = Vector2(0,0)
 var player_speed = 250
+var gem_counter=0
 
 func _ready():
 	pass # Replace with function body.
@@ -33,4 +34,12 @@ func _physics_process(delta):
 	shetab = move_and_slide(shetab, Vector2.UP)
 	shetab.x = lerp(shetab.x, 0, 0.9)
 
+
+func _on_game_over_area_body_entered(body):
+	get_tree().change_scene("res://scenes/game.tscn")
+	print("enter")
+
+
+func add_gem_counter(num=1):
+	gem_counter = gem_counter + num 
 	
